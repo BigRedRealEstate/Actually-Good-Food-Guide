@@ -1,79 +1,553 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>[GUIDE TITLE] | [YOUR NAME]</title>
-<!--
-GUIDE STARTER (The Perry Group AI class, Part 2)
-This page is deliberately plain. Claude will replace the placeholder
-content with YOUR guide during class. Keep everything in this one file.
--->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Actually Good Food Guide | Murray to Orem</title>
+<meta name="description" content="The best food from Murray to Orem, rated on flavor only. Not looks, not decor, not service. Just whether it knocks your socks off.">
+<meta name="theme-color" content="#E7E2D5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0A09" media="(prefers-color-scheme: dark)">
 <style>
-:root {
---ink: #141414;
---paper: #FFFFFF;
---accent: #E9B039; /* solid gold; swap if you use your own brand */
---line: #E5E2DB;
+/* ============================================================
+   PALETTE - matches Caleb's lead page: cream wall, dark shirt,
+   auburn accent. Dark mode follows the visitor's device.
+   ============================================================ */
+:root{
+  --bg:#E7E2D5; --surface:#F3F0E7; --surface-2:#DCD6C5;
+  --line:#C6BFAA; --line-soft:#D5CEBB; --line-strong:#B4AB93;
+  --text:#1B2419; --muted:#575D51; --muted-2:#736D5C;
+  --accent:#7C5A33; --accent-glow:rgba(124,90,51,.13); --glow-2:rgba(124,90,51,.07);
+  --accent-txt:#7C5A33; --sand:#6F5028;
+  --btn-fg:#F6F3EA; --btn-hover:#66491F;
+  --edge-light:rgba(255,255,255,.55); --edge-fade:rgba(231,226,213,.55);
+  --veil-1:rgba(231,226,213,.84); --veil-2:rgba(231,226,213,.92); --veil-3:rgba(231,226,213,.95);
+  --card-grad:linear-gradient(180deg,#F6F3EA,var(--surface));
+  --input-bg:#FBF9F3;
+  --arrow:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none'%3E%3Cpath d='M1 1.5 7 7l6-5.5' stroke='%23575D51' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  --ease-out:cubic-bezier(0.23,1,0.32,1);
+  --dur-press:120ms; --dur-ui:180ms; --dur-enter:520ms;
+  --radius:14px; --radius-lg:22px;
+  --shadow:0 18px 40px -22px rgba(70,58,36,.42);
+  --font:"Inter","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
-* { box-sizing: border-box; }
-body {
-margin: 0; background: var(--paper); color: var(--ink);
-font-family: "Nunito Sans", Helvetica, Arial, sans-serif;
-line-height: 1.6; font-size: 17px;
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0A0A09; --surface:#131312; --surface-2:#1C1C1A;
+    --line:#2C2C29; --line-soft:#1E1E1C; --line-strong:#3A3A36;
+    --text:#E2DDCC; --muted:#A79C86; --muted-2:#8C8474;
+    --accent:#B19371; --accent-glow:rgba(177,147,113,.17); --glow-2:rgba(209,178,146,.09);
+    --accent-txt:#BCA079; --sand:#D1B292;
+    --btn-fg:#0A0A09; --btn-hover:#C2A484;
+    --edge-light:rgba(255,255,255,.06); --edge-fade:rgba(10,10,9,.62);
+    --veil-1:rgba(10,10,9,.84); --veil-2:rgba(10,10,9,.92); --veil-3:rgba(10,10,9,.95);
+    --card-grad:linear-gradient(180deg,var(--surface),#101010);
+    --input-bg:#0A0A09;
+    --shadow:0 18px 40px -20px rgba(0,0,0,.8);
+    --arrow:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none'%3E%3Cpath d='M1 1.5 7 7l6-5.5' stroke='%23A79C86' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
 }
-.wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
-header { border-bottom: 1px solid var(--ink); padding: 14px 0; }
-header .wrap { display: flex; justify-content: space-between; align-items: center; }
-.brand { font-weight: 800; letter-spacing: .02em; }
-.brand small { display: block; font-weight: 400; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #6a6a6a; }
-.hero { padding: 56px 0 40px 0; border-bottom: 1px solid var(--line); }
-h1 { font-size: 40px; line-height: 1.1; margin: 0 0 12px 0; }
-.sub { font-size: 19px; color: #444; margin: 0; }
-section { padding: 36px 0; border-bottom: 1px solid var(--line); }
-h2 { font-size: 24px; margin: 0 0 10px 0; }
-.about { display: flex; gap: 20px; align-items: center; }
-.about img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; }
-.cta { text-align: center; padding: 48px 0; }
-.cta a { display: inline-block; background: var(--ink); color: #fff; text-decoration: none; padding: 14px 28px; font-weight: 700; }
-footer { padding: 28px 0 40px 0; font-size: 13px; color: #6a6a6a; }
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:128px; -webkit-text-size-adjust:100%}
+body{margin:0; background:var(--bg); color:var(--text); font-family:var(--font);
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+  padding-bottom:env(safe-area-inset-bottom)}
+img{max-width:100%; display:block}
+a{color:inherit}
+h1,h2,h3{margin:0; font-weight:650; text-wrap:balance}
+h1{line-height:1.02; letter-spacing:-.035em}
+h2{line-height:1.07; letter-spacing:-.026em}
+h3{line-height:1.24; letter-spacing:-.014em}
+p{margin:0}
+.wrap{width:100%; max-width:1080px; margin:0 auto; padding:0 20px}
+.eyebrow{font-size:12px; font-weight:650; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-txt)}
+em{font-style:normal; color:var(--sand)}
+
+/* ---------- header ---------- */
+.header{position:sticky; top:0; z-index:60; background:var(--veil-1);
+  backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);
+  box-shadow:inset 0 1px 0 var(--edge-light)}
+.header-inner{display:flex; align-items:center; gap:16px; height:66px}
+.brand{display:flex; align-items:center; gap:11px; text-decoration:none; margin-right:auto; min-width:0}
+.mark{width:38px; height:38px; flex:none; border-radius:50%; object-fit:cover; object-position:center 15%;
+  border:1px solid var(--line); background:var(--surface-2)}
+.brand-name{display:block; font-weight:650; font-size:15px; letter-spacing:-.02em; white-space:nowrap}
+.brand-sub{display:block; font-size:12.5px; color:var(--muted); white-space:nowrap}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font:inherit; font-weight:600; font-size:15px; letter-spacing:-.01em;
+  padding:13px 22px; border-radius:999px; border:1px solid transparent;
+  text-decoration:none; cursor:pointer; white-space:nowrap;
+  transition:transform var(--dur-press) var(--ease-out), background-color var(--dur-ui) ease, border-color var(--dur-ui) ease}
+.btn:active{transform:scale(.975)}
+.btn-primary{background:var(--accent); color:var(--btn-fg); box-shadow:0 10px 26px -14px var(--accent)}
+.btn-ghost{background:transparent; color:var(--text); border-color:var(--line)}
+@media (hover:hover) and (pointer:fine){
+  .btn-primary:hover{background:var(--btn-hover)}
+  .btn-ghost:hover{background:var(--surface-2); border-color:var(--line-strong)}
+}
+.btn-sm{padding:9px 16px; font-size:13.5px}
+.btn-lg{padding:16px 30px; font-size:16.5px}
+
+/* ---------- section tabs ---------- */
+.tabs{position:sticky; top:66px; z-index:55; background:var(--veil-2);
+  backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px)}
+.tabs::after{content:''; position:absolute; left:0; right:0; top:100%; height:24px;
+  background:linear-gradient(var(--edge-fade),transparent); pointer-events:none}
+.tabs-scroll{display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding:9px 20px; max-width:1080px; margin:0 auto}
+.tabs-scroll::-webkit-scrollbar{display:none}
+.tab{flex:none; text-decoration:none; font-size:13.5px; font-weight:600; color:var(--muted);
+  padding:8px 15px; border-radius:999px; border:1px solid transparent;
+  transition:color var(--dur-ui) ease, background-color var(--dur-ui) ease, border-color var(--dur-ui) ease}
+@media (hover:hover) and (pointer:fine){ .tab:hover{color:var(--text); background:var(--surface)} }
+.tab.active{color:var(--text); background:var(--surface-2); border-color:var(--line)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; overflow:hidden; padding:72px 0 64px}
+.hero::before{content:""; position:absolute; inset:-30% -10% auto -10%; height:620px; pointer-events:none;
+  background:radial-gradient(46% 52% at 22% 30%,var(--accent-glow),transparent 70%),
+             radial-gradient(40% 46% at 82% 12%,var(--glow-2),transparent 70%)}
+.hero-inner{position:relative; z-index:1}
+.hero-grid{display:grid; gap:36px}
+@media (min-width:900px){ .hero-grid{grid-template-columns:1.12fr .88fr; gap:56px; align-items:center} }
+.hero h1{font-size:clamp(2.2rem,6.4vw,3.9rem); margin:16px 0 0; max-width:15ch}
+.hero-lede{margin-top:20px; max-width:52ch; font-size:clamp(1rem,2.4vw,1.16rem); color:var(--muted)}
+.hero-cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:32px}
+.hero-note{margin-top:18px; font-size:13.5px; color:var(--muted-2)}
+.hero-photo{margin:0; max-width:330px}
+@media (max-width:899px){ .hero-photo{max-width:260px} }
+.portrait{aspect-ratio:4/5; width:100%; object-fit:cover; object-position:center 18%;
+  border-radius:20px; border:1px solid var(--line); box-shadow:var(--shadow); background:var(--surface-2)}
+.hero-photo figcaption{margin-top:14px; font-size:12.5px; line-height:1.5; color:var(--muted-2)}
+.hero-photo figcaption strong{display:block; color:var(--text); font-size:14.5px; font-weight:600}
+.trust{display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:44px; padding-top:26px; border-top:1px solid var(--line-soft)}
+.trust div{display:flex; align-items:center; gap:9px; font-size:13.5px; color:var(--muted)}
+.dot{width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none}
+
+/* ---------- shared section bits ---------- */
+section{scroll-margin-top:128px}
+.band{padding:clamp(56px,7vw,94px) 0; border-top:1px solid var(--line-soft)}
+.band.alt{background:var(--surface)}
+.sec-head{max-width:60ch; margin-bottom:34px}
+.sec-head h2{font-size:clamp(1.6rem,4vw,2.3rem); margin:12px 0 0}
+.sec-head p{margin-top:14px; color:var(--muted)}
+
+/* ---------- rules: a plain numbered list, no card grid ---------- */
+.rules{list-style:none; margin:0; padding:0; display:grid; gap:0; counter-reset:r}
+@media (min-width:860px){ .rules{grid-template-columns:1fr 1fr; column-gap:56px} }
+.rules li{counter-increment:r; display:grid; grid-template-columns:44px 1fr; gap:4px 14px;
+  padding:22px 0; border-top:1px solid var(--line-soft)}
+.rules li::before{content:counter(r,decimal-leading-zero); grid-row:span 2;
+  font-size:14px; font-weight:700; color:var(--accent-txt); padding-top:3px; font-variant-numeric:tabular-nums}
+.rules h3{font-size:1.1rem}
+.rules p{color:var(--muted); font-size:15px; max-width:44ch}
+
+/* ---------- scale: stat-band style ---------- */
+.scale{display:grid; gap:28px 20px; text-align:center}
+@media (min-width:640px){ .scale{grid-template-columns:repeat(3,1fr)} }
+@media (min-width:1000px){ .scale{grid-template-columns:repeat(5,1fr)} }
+.tier b{display:block; font-size:clamp(2rem,4.6vw,2.7rem); font-weight:700; letter-spacing:-.05em;
+  line-height:1; color:var(--accent-txt); font-variant-numeric:tabular-nums}
+.tier span{display:block; margin-top:12px; font-size:11.5px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--text)}
+.tier i{display:block; margin-top:8px; font-style:normal; font-size:14px; color:var(--muted)}
+.scale-note{margin-top:34px; text-align:center; font-size:14px; color:var(--muted-2)}
+
+/* ---------- the list ---------- */
+.controls{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:22px}
+select{appearance:none; font:inherit; font-size:14.5px; font-weight:550; color:var(--text);
+  background:var(--input-bg) var(--arrow) no-repeat right 15px center; border:1px solid var(--line);
+  border-radius:12px; padding:11px 40px 11px 15px; cursor:pointer}
+select:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow)}
+.cards{display:grid; gap:16px}
+@media (min-width:760px){ .cards{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1040px){ .cards{grid-template-columns:repeat(3,1fr)} }
+.card{position:relative; display:flex; flex-direction:column; gap:14px;
+  background:var(--card-grad); border:1px solid var(--line); border-radius:var(--radius-lg);
+  padding:24px; box-shadow:var(--shadow)}
+.card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px}
+.card h3{font-size:1.14rem}
+.where{margin-top:4px; font-size:13px; color:var(--muted-2)}
+.score{text-align:right; flex:none}
+.score b{display:block; font-size:2.4rem; font-weight:700; line-height:.95; letter-spacing:-.05em;
+  color:var(--accent-txt); font-variant-numeric:tabular-nums}
+.score span{display:block; margin-top:6px; font-size:10.5px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted-2)}
+.order{font-size:14.5px; padding:11px 14px; border-radius:12px; background:var(--accent-glow);
+  border:1px solid var(--line-soft)}
+.order strong{color:var(--accent-txt); font-weight:650}
+.take{color:var(--muted); font-size:15px; text-wrap:pretty}
+.card-foot{margin-top:auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px;
+  padding-top:14px; border-top:1px solid var(--line-soft); font-size:13px; color:var(--muted-2)}
+.card-foot b{color:var(--text); font-weight:650}
+.sample-tag{position:absolute; top:-10px; left:20px; font-size:10.5px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; padding:4px 9px; border-radius:999px; background:var(--accent); color:var(--btn-fg)}
+.empty{color:var(--muted)}
+
+/* ---------- on deck: dashed, clearly "not rated yet" ---------- */
+.deck{list-style:none; margin:0; padding:0; display:grid; gap:12px}
+@media (min-width:640px){ .deck{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:1000px){ .deck{grid-template-columns:repeat(3,1fr)} }
+.deck li{padding:18px 20px; border-radius:var(--radius); border:1px dashed var(--line-strong)}
+.deck b{display:block; font-weight:650}
+.deck span{font-size:13.5px; color:var(--muted)}
+
+/* ---------- about ---------- */
+.about-grid{display:grid; gap:clamp(30px,4vw,56px)}
+@media (min-width:900px){ .about-grid{grid-template-columns:1fr 1.25fr; align-items:start} }
+.about-head h2{font-size:clamp(1.6rem,3.3vw,2.15rem); margin:14px 0 0; max-width:17ch}
+.about-copy p{color:var(--muted); font-size:clamp(1rem,2vw,1.07rem); margin:0 0 18px}
+.about-copy p:last-child{margin-bottom:0}
+
+/* ---------- follow (closing band) ---------- */
+.closing{border-top:1px solid var(--line-soft); text-align:center; padding:clamp(58px,8vw,106px) 0;
+  background:radial-gradient(70% 95% at 50% 0%,var(--accent-glow),transparent 68%)}
+.closing h2{font-size:clamp(1.8rem,4.8vw,2.9rem); max-width:17ch; margin:14px auto 0}
+.closing .wrap > p{margin:18px auto 0; max-width:48ch; color:var(--muted)}
+.contact-grid{display:grid; gap:14px; margin:40px auto 0; max-width:720px; text-align:left}
+@media (min-width:640px){ .contact-grid{grid-template-columns:1fr 1fr} }
+.contact-card{display:flex; flex-direction:column; gap:6px; text-decoration:none;
+  background:var(--surface); border:1px solid var(--line-soft); border-radius:var(--radius); padding:22px;
+  transition:background-color var(--dur-ui) ease, border-color var(--dur-ui) ease, transform var(--dur-press) var(--ease-out)}
+.contact-card:active{transform:scale(.99)}
+@media (hover:hover) and (pointer:fine){ .contact-card:hover{background:var(--surface-2); border-color:var(--line)} }
+.contact-card .k{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-2)}
+.contact-card .v{font-weight:600; font-size:16px}
+
+footer{border-top:1px solid var(--line-soft); padding:34px 0}
+footer p{font-size:13px; color:var(--muted-2)}
+
+/* ---------- mobile dock ---------- */
+.dock{position:fixed; left:0; right:0; bottom:0; z-index:70; display:none; gap:8px;
+  padding:9px 12px calc(9px + env(safe-area-inset-bottom)); background:var(--veil-3);
+  backdrop-filter:saturate(160%) blur(14px); -webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-top:1px solid var(--line)}
+.dock .btn{flex:1; padding:13px 10px; font-size:14.5px}
+@media (max-width:760px){
+  .dock{display:flex}
+  body{padding-bottom:84px}
+  .hero{padding:52px 0 48px}
+}
+
+/* ---------- motion ---------- */
+@keyframes riseIn{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+.hero-copy > *, .hero-photo, .trust{animation:riseIn var(--dur-enter) var(--ease-out) backwards}
+.hero-copy > *:nth-child(2){animation-delay:60ms}
+.hero-copy > *:nth-child(3){animation-delay:120ms}
+.hero-copy > *:nth-child(4){animation-delay:180ms}
+.hero-copy > *:nth-child(5){animation-delay:240ms}
+.hero-photo{animation-delay:150ms}
+.trust{animation-delay:320ms}
+.reveal{opacity:0; transform:translateY(18px); transition:opacity var(--dur-enter) ease, transform var(--dur-enter) var(--ease-out)}
+.reveal.in{opacity:1; transform:none}
+:focus-visible{outline:2px solid var(--accent-txt); outline-offset:3px; border-radius:6px}
+
+@media (prefers-reduced-transparency: reduce){
+  .header,.tabs,.dock{backdrop-filter:none; -webkit-backdrop-filter:none; background:var(--surface)}
+  .tabs::after{display:none}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .hero-copy > *, .hero-photo, .trust{animation:none}
+  .reveal{transform:none; transition:opacity 240ms ease}
+  .btn:active,.contact-card:active{transform:none}
+}
 </style>
 </head>
 <body>
-<header>
-<div class="wrap">
-<div class="brand">[YOUR NAME]<small>The Perry Group | Real Broker LLC</small></div>
-</div>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <!-- EDIT: headshot.jpg sits next to this file in the repo -->
+      <img class="mark" src="headshot.jpg" alt="">
+      <span>
+        <span class="brand-name">Actually Good</span>
+        <span class="brand-sub">Food guide by Caleb Rogers</span>
+      </span>
+    </a>
+    <a class="btn btn-primary btn-sm" href="https://www.instagram.com/big_red_realtor/" target="_blank" rel="noopener noreferrer">Follow</a>
+  </div>
 </header>
-<div class="wrap">
-<div class="hero">
-<h1>[GUIDE TITLE]</h1>
-<p class="sub">[One sentence on who this is for and what it gives them.]</p>
-</div>
-<section>
-<h2>[Section 1: the first question they always ask]</h2>
-<p>[Claude replaces this with your answer. Every section needs at least one thing a search cannot return: your number, your town, your experience.]</p>
+
+<!-- ══════════════ TABS ══════════════ -->
+<nav class="tabs" aria-label="Page sections">
+  <div class="tabs-scroll" id="tabs">
+    <a class="tab" href="#top">Overview</a>
+    <a class="tab" href="#rules">The Rules</a>
+    <a class="tab" href="#scale">The Scale</a>
+    <a class="tab" href="#list">The List</a>
+    <a class="tab" href="#deck">On Deck</a>
+    <a class="tab" href="#about">About</a>
+    <a class="tab" href="#follow">Follow</a>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="top" class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Murray to Orem</span>
+        <h1>Food that's <em>actually good.</em></h1>
+        <p class="hero-lede">I don't care if the place looks funny, if it's run down, if it's a hole in the wall, or if the server doesn't speak English. I only care if the food knocks my socks off.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#list">See the list</a>
+          <a class="btn btn-ghost btn-lg" href="#rules">How I rate</a>
+        </div>
+        <!-- EDIT: change this date every time you add or update a review -->
+        <p class="hero-note">A living guide. Last updated September 2026.</p>
+      </div>
+      <figure class="hero-photo">
+        <img class="portrait" src="headshot.jpg" alt="Caleb Rogers">
+        <figcaption><strong>Caleb Rogers</strong>Eats, cooks, keeps score</figcaption>
+      </figure>
+    </div>
+    <div class="trust">
+      <div><span class="dot"></span> Rated on flavor only</div>
+      <div><span class="dot"></span> Nobody gets a 10</div>
+      <div><span class="dot"></span> Local spots, no big chains</div>
+      <div><span class="dot"></span> Updated as I eat</div>
+    </div>
+  </div>
 </section>
-<section>
-<h2>[Section 2]</h2>
-<p>[Placeholder.]</p>
+
+<!-- ══════════════ RULES ══════════════ -->
+<section id="rules" class="band">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The rules</span>
+      <h2>Flavor only. <em>Nobody gets a 10.</em></h2>
+      <p>Instagram tells you what looks good. This guide tells you what tastes good. Every spot gets judged the same way.</p>
+    </div>
+    <ol class="rules reveal">
+      <li><h3>Taste is the score</h3><p>The number is about one thing: how the food tastes.</p></li>
+      <li><h3>Looks don't count</h3><p>Decor, plating, the strip mall parking lot, the service. None of it moves the number.</p></li>
+      <li><h3>Nobody gets a 10</h3><p>Scores run 0 to 10 with decimals. A 10 doesn't exist, which keeps every other number honest.</p></li>
+      <li><h3>Price matters a little</h3><p>Every review notes the price and whether it's worth it. It's context, not the headline.</p></li>
+      <li><h3>Local first</h3><p>No huge international chains. This guide is for the spots you'd never find by scrolling.</p></li>
+    </ol>
+  </div>
 </section>
-<section>
-<h2>[Section 3]</h2>
-<p>[Placeholder.]</p>
+
+<!-- ══════════════ SCALE ══════════════ -->
+<section id="scale" class="band alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The scale</span>
+      <h2>What the numbers mean</h2>
+    </div>
+    <!-- EDIT: rename these tiers however you like (also update tier() in the script) -->
+    <div class="scale reveal">
+      <div class="tier"><b>9.0+</b><span>Drive across the valley</span><i>Rare. Thinking about it days later.</i></div>
+      <div class="tier"><b>8.0</b><span>Go this week</span><i>Top of the rotation.</i></div>
+      <div class="tier"><b>7.0</b><span>Solid, go</span><i>Really good food.</i></div>
+      <div class="tier"><b>6.0</b><span>Fine if nearby</span><i>Not worth a special trip.</i></div>
+      <div class="tier"><b>&lt;6</b><span>Skip it</span><i>Doesn't deliver on flavor.</i></div>
+    </div>
+  </div>
 </section>
-<section>
-<div class="about">
-<img src="headshot.jpg" alt="[YOUR NAME]">
-<p><strong>[YOUR NAME]</strong><br>[The two sentences you'd want people to read about you.]</p>
-</div>
+
+<!-- ══════════════ THE LIST ══════════════ -->
+<section id="list" class="band">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The list</span>
+      <h2>Rated spots</h2>
+      <p>Ordered by score. Filter by city if you're hungry and nearby.</p>
+    </div>
+    <div class="controls">
+      <select id="cityFilter" aria-label="Filter by city"><option value="">All cities</option></select>
+      <select id="catFilter" aria-label="Filter by food type"><option value="">All food</option></select>
+      <select id="sortBy" aria-label="Sort">
+        <option value="score">Highest score</option>
+        <option value="date">Newest review</option>
+      </select>
+    </div>
+    <div class="cards" id="cards"></div>
+  </div>
 </section>
-<div class="cta">
-<a href="sms:8010000000?&body=Hi%20[YOUR NAME],%20I%20just%20read%20your%20guide">[Text me: what you want them to do next]</a>
-</div>
+
+<!-- ══════════════ ON DECK ══════════════ -->
+<section id="deck" class="band alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">On deck</span>
+      <h2>Next up to try</h2>
+      <p>Not rated yet. Once I've eaten there, they move up to the list with a score.</p>
+    </div>
+    <ul class="deck reveal" id="deckList"></ul>
+  </div>
+</section>
+
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="about" class="band">
+  <div class="wrap about-grid">
+    <div class="about-head reveal">
+      <span class="eyebrow">Who's rating</span>
+      <h2>I care about <em>one thing.</em></h2>
+    </div>
+    <div class="about-copy reveal">
+      <p>I'm a big food guy, I cook, and I know what actually tastes good. I don't care about looks or style, just whether the food delivers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOLLOW ══════════════ -->
+<section id="follow" class="closing">
+  <div class="wrap">
+    <span class="eyebrow">Follow along</span>
+    <h2>New ratings drop <em>as I eat.</em></h2>
+    <p>Follow so you know where to go next, and send me the spots I need to try.</p>
+    <div class="contact-grid reveal">
+      <a class="contact-card" href="https://www.instagram.com/big_red_realtor/" target="_blank" rel="noopener noreferrer">
+        <span class="k">Follow on Instagram</span>
+        <span class="v">@big_red_realtor</span>
+      </a>
+      <a class="contact-card" href="sms:+18019102955?&body=Hey%20Caleb%2C%20you%20need%20to%20try%20this%20spot%3A%20">
+        <span class="k">Text me a tip</span>
+        <span class="v">801-910-2955</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <footer>
-[YOUR NAME] | The Perry Group | Real Broker LLC | [your cell]
+  <div class="wrap"><p>Actually Good Food Guide by Caleb Rogers. Rated on flavor, not looks. © <span id="yr">2026</span></p></div>
 </footer>
+
+<div class="dock">
+  <a class="btn btn-ghost" href="#list">The List</a>
+  <a class="btn btn-primary" href="https://www.instagram.com/big_red_realtor/" target="_blank" rel="noopener noreferrer">Follow</a>
 </div>
+
+<script>
+/* =========================================================
+   HOW TO ADD OR EDIT A REVIEW
+   Copy one { ... } block below, paste it into the list, change the values.
+   score:  0 to 9.9 (nobody gets a 10)
+   price:  "$", "$$", "$$$", or "$$$$"
+   date:   "YYYY-MM-DD" (the day you ate there)
+   sample: true shows a SAMPLE tag. Delete the samples once you have real ones.
+   ========================================================= */
+const REVIEWS = [
+  {
+    name: "Sample Taco Shop",
+    city: "Your City",
+    category: "Tacos",
+    order: "The dish you'd tell a friend to get",
+    score: 8.4,
+    price: "$",
+    worthIt: "Worth it: yes, easily",
+    take: "Placeholder. Your two or three sentences on why it knocks your socks off (or doesn't).",
+    date: "2026-09-01",
+    sample: true
+  },
+  {
+    name: "Sample Burger Joint",
+    city: "Another City",
+    category: "Burgers",
+    order: "Name the burger and any must-add",
+    score: 7.1,
+    price: "$$",
+    worthIt: "Worth it: at lunch, yes",
+    take: "Placeholder. Say what you tasted, what stood out, and what kept it from scoring higher.",
+    date: "2026-08-20",
+    sample: true
+  }
+];
+
+/* ON DECK: spots you plan to try. Move them up to REVIEWS once you've eaten there. */
+const ON_DECK = [
+  { name: "Sabaidee Thai Cuisine", city: "Lehi", try: "Massaman curry" },
+  { name: "Marley's Gourmet Sliders", city: "Lindon", try: "Sliders" },
+  { name: "Cravings Bistro", city: "Pleasant Grove", try: "Gourmet grilled cheese" },
+  { name: "5-Star Barbecue", city: "Orem", try: "Brisket and ribs" },
+  { name: "Asa Ramen", city: "Orem", try: "Tonkotsu ramen and karaage" },
+  { name: "Joe's Cafe", city: "Orem", try: "French toast and grits" }
+];
+
+/* ---------- You shouldn't need to edit below this line ---------- */
+(function(){
+  "use strict";
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
+  function tier(s){
+    if (s >= 9) return "Drive across the valley";
+    if (s >= 8) return "Go this week";
+    if (s >= 7) return "Solid, go";
+    if (s >= 6) return "Fine if nearby";
+    return "Skip it";
+  }
+  function fmtDate(d){
+    var dt = new Date(d + "T12:00:00");
+    return isNaN(dt) ? "" : dt.toLocaleDateString("en-US", {month:"short", year:"numeric"});
+  }
+  function fill(id, values){
+    var el = document.getElementById(id);
+    Array.from(new Set(values)).sort().forEach(function(v){
+      var o = document.createElement("option"); o.value = v; o.textContent = v; el.appendChild(o);
+    });
+  }
+  function render(){
+    var city = document.getElementById("cityFilter").value;
+    var cat  = document.getElementById("catFilter").value;
+    var sort = document.getElementById("sortBy").value;
+    var list = REVIEWS.filter(function(r){ return (!city || r.city === city) && (!cat || r.category === cat); });
+    list.sort(sort === "date" ? function(a,b){ return b.date.localeCompare(a.date); }
+                              : function(a,b){ return b.score - a.score; });
+    var box = document.getElementById("cards");
+    if (!list.length){ box.innerHTML = '<p class="empty">Nothing rated here yet. Check back soon.</p>'; return; }
+    box.innerHTML = list.map(function(r){
+      var s = Math.min(Number(r.score), 9.9).toFixed(1);
+      return '<article class="card">' +
+        (r.sample ? '<span class="sample-tag">Sample, replace me</span>' : '') +
+        '<div class="card-top"><div><h3>' + esc(r.name) + '</h3><div class="where">' + esc(r.city) + ' · ' + esc(r.category) + '</div></div>' +
+        '<div class="score"><b>' + s + '</b><span>' + tier(s) + '</span></div></div>' +
+        '<div class="order"><strong>Order:</strong> ' + esc(r.order) + '</div>' +
+        '<p class="take">' + esc(r.take) + '</p>' +
+        '<div class="card-foot"><span><b>' + esc(r.price) + '</b> · ' + esc(r.worthIt) + '</span><span>' + fmtDate(r.date) + '</span></div>' +
+      '</article>';
+    }).join("");
+  }
+  document.getElementById("deckList").innerHTML = ON_DECK.map(function(d){
+    return '<li><b>' + esc(d.name) + '</b><span>' + esc(d.city) + ' · Try: ' + esc(d.try) + '</span></li>';
+  }).join("");
+  fill("cityFilter", REVIEWS.map(function(r){ return r.city; }));
+  fill("catFilter",  REVIEWS.map(function(r){ return r.category; }));
+  ["cityFilter","catFilter","sortBy"].forEach(function(id){
+    document.getElementById(id).addEventListener("change", render);
+  });
+  render();
+
+  /* ---------- tab scroll-spy ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('#tabs .tab'));
+  var secs = tabs.map(function(t){ return document.querySelector(t.getAttribute('href')); });
+  var hdr = document.querySelector('.header'), tb = document.querySelector('.tabs');
+  function spy(){
+    var line = window.scrollY + hdr.offsetHeight + tb.offsetHeight + 24, cur = 0;
+    secs.forEach(function(s,i){ if (s && s.offsetTop <= line) cur = i; });
+    tabs.forEach(function(t,i){ t.classList.toggle('active', i === cur); });
+  }
+  window.addEventListener('scroll', spy, {passive:true});
+  window.addEventListener('resize', spy);
+  spy();
+
+  /* ---------- scroll reveal ---------- */
+  var rev = document.querySelectorAll('.reveal');
+  if (!window.IntersectionObserver || window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    rev.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {rootMargin:'0px 0px -12% 0px', threshold:0.12});
+    rev.forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
 </body>
 </html>
